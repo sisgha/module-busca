@@ -1,4 +1,4 @@
-export enum IAuthorizationAction {
+export enum IGenericAction {
   READ = 'read',
   CREATE = 'create',
   UPDATE = 'update',

@@ -1,6 +1,6 @@
 import { DbEventModel } from '../../../domain';
-import { DbEventZod } from '../../dtos';
-import { tryJSONParse } from '../../helpers/try-json-parse.util';
+import { DbEventZod } from '../index';
+import { tryJSONParse } from '../../helpers/utils/try-json-parse.util';
 import { HandleDbEventOutputReason } from '../domain/HandleDbEventOutputReason';
 
 export const parseDbEvent = async (dbEventRaw: unknown) => {

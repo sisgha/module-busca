@@ -1,7 +1,7 @@
 import * as z from 'zod';
-import { UUIDZod } from '../_literals/uuid.zod';
-import { IdIntZod } from '../_literals/id-int.zod';
-import { mapDbEventDataKeys } from '../../db-events/db-events-utils/map-db-event-data-keys';
+import { UUIDZod } from '../../zod/_literals/uuid.zod';
+import { IdIntZod } from '../../zod/_literals/id-int.zod';
+import { mapDbEventDataKeys } from '../db-event-utils/map-db-event-data-keys';
 
 export const DbEventZod = z.object({
   id: z.string().uuid(),

@@ -2,14 +2,14 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Message } from 'amqplib';
 import { AckOrNack, SubscriberSessionAsPromised } from 'rascal';
 import { DbEventModel } from '../../domain';
-import { getAppResourceByKey } from '../module-busca-app-resources';
-import { extractDbEventDataDateUpdated } from '../db-events/db-events-utils/extract-db-event-date-updated';
-import { parseDbEvent } from '../db-events/db-events-utils/parse-db-event';
-import { PlaceholderUndefined } from '../db-events/db-events-utils/placeholder-undefined';
-import { DbEventAction } from '../db-events/domain/DbEventAction';
-import { HandleDbEventOutputReason } from '../db-events/domain/HandleDbEventOutputReason';
+import { extractDbEventDataDateUpdated } from '../sisgea-db-events-common/db-event-utils/extract-db-event-date-updated';
+import { parseDbEvent } from '../sisgea-db-events-common/db-event-utils/parse-db-event';
+import { PlaceholderUndefined } from '../sisgea-db-events-common/db-event-utils/placeholder-undefined';
+import { DbEventAction } from '../sisgea-db-events-common/domain/DbEventAction';
+import { HandleDbEventOutputReason } from '../sisgea-db-events-common/domain/HandleDbEventOutputReason';
 import { MeilisearchContainerService } from '../meilisearch-container/meilisearch-container.service';
 import { MessageBrokerContainerService } from '../message-broker-container/message-broker-container.service';
+import { getAppResourceByKey } from '../module-busca-app-resources';
 
 type HandleOutput =
   | {

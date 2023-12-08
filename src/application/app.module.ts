@@ -10,7 +10,6 @@ import { SISGEANestSSOAuthenticationModule } from '@sisgea/sso-nest-client';
 import { AuthenticatedGraphQLGuard } from '@sisgea/sso-nest-client/dist/application/gql';
 import { ActorContextModule } from '../infrastructure/actor-context';
 import { EnvironmentConfigModule } from '../infrastructure/environment-config';
-import { EventsModule } from '../infrastructure/events/events.module';
 import { GqlExceptionFilter } from '../infrastructure/filters/GqlExceptionFilter';
 import { KCClientModule } from '../infrastructure/kc-client';
 import { MeilisearchContainerModule } from '../infrastructure/meilisearch-container/meilisearch-container.module';
@@ -38,7 +37,6 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
     }),
 
     ScheduleModule.forRoot(),
-    EventsModule.forRoot(),
 
     EnvironmentConfigModule,
 

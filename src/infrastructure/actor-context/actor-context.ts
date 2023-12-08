@@ -1,18 +1,30 @@
-import { ForbiddenException } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { GenericCanRequest } from '@sisgea/autorizacao-client';
 import { IRequestUser } from '@sisgea/sso-nest-client';
 import { get } from 'lodash';
+import { IGenericAction } from '../IGenericAction';
 import { Actor, ActorUser } from '../authentication';
-import { IAuthorizationAction } from '../authorization';
 import { SISGEAAutorizacaoConnectContainerService } from '../sisgea-autorizacao-connect-container/sisgea-autorizacao-connect-container.service';
 
+@Injectable()
 export class ActorContext {
+  private actor: Actor = Actor.forAnonymous();
+
   constructor(
     // ...
 
     public readonly sisgeaAutorizacaoClientService: SISGEAAutorizacaoConnectContainerService,
-    public readonly actor: Actor,
-  ) {}
+
+    actor?: Actor,
+  ) {
+    if (actor) {
+      this.setActor(actor);
+    }
+  }
+
+  setActor(actor: Actor) {
+    this.actor = actor;
+  }
 
   // ...
 
@@ -48,7 +60,7 @@ export class ActorContext {
   }
 
   async readResource(resource: string, data: any) {
-    await this.ensurePermission(resource, IAuthorizationAction.READ, data);
+    await this.ensurePermission(resource, IGenericAction.READ, data);
     return data;
   }
 

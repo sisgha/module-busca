@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { PlaceholderUndefined } from './placeholder-undefined';
 
 export const extractDbEventGenericDataField =
