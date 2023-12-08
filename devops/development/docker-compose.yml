@@ -1,0 +1,38 @@
+services:
+  sisgea-module-busca:
+    image: node:18
+    user: node
+    command: sh -c "tail -f /dev/null"
+    container_name: sisgea-module-busca
+    working_dir: /sisgea/env-dev/modules/back-end/module-busca
+    depends_on:
+      - sisgea-module-busca-meilisearch
+    networks:
+      - sisgea-net
+    ports:
+      - 127.128.69.63:3469:3469
+      - 127.128.69.63:9229:9229
+    volumes:
+      - ../../../../../libs:/sisgea/env-dev/libs
+      - ../../:/sisgea/env-dev/modules/back-end/module-busca
+    env_file:
+      - .env
+
+  sisgea-module-busca-meilisearch:
+    image: getmeili/meilisearch:v1.5
+    container_name: sisgea-module-busca-meilisearch
+    volumes:
+      - 'sisgea-module-busca-meilisearch-data:/meili_data'
+    networks:
+      - sisgea-net
+    ports:
+      - 127.128.69.65:7700:7700
+    env_file:
+      - .meilisearch.env
+
+networks:
+  sisgea-net:
+    external: true
+
+volumes:
+  sisgea-module-busca-meilisearch-data:
