@@ -18,4 +18,4 @@ RUN rm -rf node_modules
 FROM prod-deps
 COPY --from=assets /sisgea/env-dev/modules/backend-module-busca /sisgea/env-dev/modules/backend-module-busca
 WORKDIR /sisgea/env-dev/modules/backend-module-busca
-CMD npm run db:migrate && npm run seed:run && npm run start:prod
+CMD npm run start:prod
