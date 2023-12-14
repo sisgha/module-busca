@@ -5,7 +5,7 @@ export class AppService {
   getHello() {
     return {
       status: 'up',
-      module: 'module-autenticacao',
+      module: 'module-busca',
     };
   }
 }
