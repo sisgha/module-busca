@@ -99,50 +99,8 @@ export class EnvironmentConfigService implements IConfig {
 
   //
 
-  getKeyCloakBaseUrl(): string | undefined {
-    return this.configService.get<string>('KC_BASE_URL');
-  }
-
-  getKeyCloakRealm(): string | undefined {
-    return this.configService.get<string>('KC_REALM');
-  }
-
-  getKeyCloakClientId(): string | undefined {
-    return this.configService.get<string>('KC_CLIENT_ID');
-  }
-
-  getKeyCloakClientSecret(): string | undefined {
-    return this.configService.get<string>('KC_CLIENT_SECRET');
-  }
-
   getKeyCloakConfigCredentials(): ISISGEANestSSOConfigKeyCloakCredentials {
-    const baseUrl = this.getKeyCloakBaseUrl();
-    const realm = this.getKeyCloakRealm();
-    const clientId = this.getKeyCloakClientId();
-    const clientSecret = this.getKeyCloakClientSecret();
-
-    if (!baseUrl) {
-      throw new Error('KeyCloak baseUrl config not provided.');
-    }
-
-    if (!realm) {
-      throw new Error('KeyCloak realm config not provided.');
-    }
-
-    if (!clientId) {
-      throw new Error('KeyCloak clientId config not provided.');
-    }
-
-    if (!clientSecret) {
-      throw new Error('KeyCloak clientSecret config not provided.');
-    }
-
-    return {
-      baseUrl,
-      realm,
-      clientId,
-      clientSecret,
-    };
+    throw new Error('getKeyCloakConfigCredentials: not implemented');
   }
 
   //

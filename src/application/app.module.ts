@@ -8,10 +8,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { SISGEANestSSOAuthenticationModule } from '@sisgea/sso-nest-client';
 import { AuthenticatedGraphQLGuard } from '@sisgea/sso-nest-client/dist/application/gql';
-import { ActorContextModule } from '../infrastructure/actor-context';
 import { EnvironmentConfigModule } from '../infrastructure/environment-config';
-import { GqlExceptionFilter } from '../infrastructure/filters/GqlExceptionFilter';
-import { KCClientModule } from '../infrastructure/kc-client';
+import { ActorContextModule } from '../infrastructure/iam/actor-context';
 import { MeilisearchContainerModule } from '../infrastructure/meilisearch-container/meilisearch-container.module';
 import { MessageBrokerContainerModule } from '../infrastructure/message-broker-container/message-broker-container.module';
 import { MessageBrokerSubscriptionsModule } from '../infrastructure/message-broker-subscriptions/message-broker-subscriptions.module';
@@ -19,7 +17,8 @@ import { SISGEAAutorizacaoConnectContainerModule } from '../infrastructure/sisge
 import { SISGEANestSSOContextModule } from '../infrastructure/sisgea-nest-sso-context';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsuarioModule } from './modules/usuario/usuario.module';
+import { GqlExceptionFilter } from './filters/GqlExceptionFilter';
+import { BuscaUsuarioModule } from './modules/busca-usuario/busca-usuario.module';
 
 @Module({
   imports: [
@@ -64,7 +63,6 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
 
     //
 
-    KCClientModule,
     MessageBrokerContainerModule,
 
     //
@@ -78,7 +76,10 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
     //
 
     MessageBrokerSubscriptionsModule,
-    UsuarioModule,
+
+    //
+
+    BuscaUsuarioModule,
   ],
 
   controllers: [

@@ -1,4 +1,4 @@
-import { DbEventModel } from '../../../domain';
+import { ForeignDbEventModel } from '../../../domain';
 import { DbEventZod } from '../index';
 import { tryJSONParse } from '../../helpers/utils/try-json-parse.util';
 import { HandleDbEventOutputReason } from '../domain/HandleDbEventOutputReason';
@@ -9,7 +9,7 @@ export const parseDbEvent = async (dbEventRaw: unknown) => {
   const dbEventValidationResult = await DbEventZod.safeParseAsync(dbEvent);
 
   if (dbEventValidationResult.success) {
-    const dbEvent = dbEventValidationResult.data as DbEventModel;
+    const dbEvent = dbEventValidationResult.data as ForeignDbEventModel;
 
     return {
       success: true,

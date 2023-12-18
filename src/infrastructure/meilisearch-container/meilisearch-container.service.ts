@@ -2,11 +2,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { has } from 'lodash';
 import MeiliSearch from 'meilisearch';
-import { IModuleBuscaAppResource, IGenericSearchResult } from '../../domain';
-import { IGenericListInput } from '../../domain/search/IGenericListInput';
-import { ModuleBuscaAppResources, getAppResourceByKey } from '../module-busca-app-resources';
+import { BuscaAppResources, getAppResourceByKey } from '../../application/modules';
+import { IModuleBuscaAppResource } from '../../domain';
+import { IGenericListInput } from '../../domain/sisgea-search/IGenericListInput';
 import { parralelMap } from '../helpers/modules.parralel-map';
 import { MEILISEARCH_CLIENT } from './tokens/MEILISEARCH_CLIENT';
+import { IGenericSearchResult } from '../../domain/sisgea-search/IGenericSearchResult';
 
 export const MEILISEARCH_SYNC_RECORDS_INTERVAL = 5 * 1000;
 
@@ -154,7 +155,7 @@ export class MeilisearchContainerService {
 
   private async findRecordsWithOutdatedDateSearch() {
     const findRecordsWithOutdatedDateSearchGenerator = async function* (this: MeilisearchContainerService) {
-      for (const appResource of ModuleBuscaAppResources) {
+      for (const appResource of BuscaAppResources) {
         let recordsWithOutdatedDateSearch: any[] = [];
 
         do {

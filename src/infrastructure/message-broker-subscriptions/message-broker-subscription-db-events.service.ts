@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Message } from 'amqplib';
 import { AckOrNack, SubscriberSessionAsPromised } from 'rascal';
-import { DbEventModel } from '../../domain';
+import { ForeignDbEventModel } from '../../domain';
 import { extractDbEventDataDateUpdated } from '../sisgea-db-events-common/db-event-utils/extract-db-event-date-updated';
 import { parseDbEvent } from '../sisgea-db-events-common/db-event-utils/parse-db-event';
 import { PlaceholderUndefined } from '../sisgea-db-events-common/db-event-utils/placeholder-undefined';
@@ -9,7 +9,7 @@ import { DbEventAction } from '../sisgea-db-events-common/domain/DbEventAction';
 import { HandleDbEventOutputReason } from '../sisgea-db-events-common/domain/HandleDbEventOutputReason';
 import { MeilisearchContainerService } from '../meilisearch-container/meilisearch-container.service';
 import { MessageBrokerContainerService } from '../message-broker-container/message-broker-container.service';
-import { getAppResourceByKey } from '../module-busca-app-resources';
+import { getAppResourceByKey } from '../../application/modules';
 
 type HandleOutput =
   | {
@@ -48,7 +48,7 @@ export class MessageBrokerSubscriptionDbEventsService implements OnModuleInit {
     }
   }
 
-  async handleIncomingDbEvent(dbEvent: DbEventModel): Promise<HandleOutput> {
+  async handleIncomingDbEvent(dbEvent: ForeignDbEventModel): Promise<HandleOutput> {
     const appResource = getAppResourceByKey(dbEvent.resource);
 
     const resourceIndex = await this.meilisearchContainerService.getIndexForAppResource(appResource);
