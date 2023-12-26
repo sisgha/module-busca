@@ -2,7 +2,7 @@ import { Query, Resolver } from '@nestjs/graphql';
 import { ActorContext } from '../../../infrastructure/iam/actor-context';
 import { ResolveActorContext } from '../../../infrastructure/iam/authentication/decorators/ResolveActorContext';
 import { ValidatedArgs } from '../../../infrastructure/zod/decorators';
-import { GenericListInputType, GenericListInputZod } from '../_generics';
+import { GenericListInputType, GenericListInputZod } from '../busca';
 import { UsuarioListResultType, UsuarioType } from './busca-usuario-dtos/graphql';
 import { BuscaUsuarioService } from './busca-usuario.service';
 

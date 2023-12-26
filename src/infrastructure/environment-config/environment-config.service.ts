@@ -1,22 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ISISGEANestSSOConfigKeyCloakCredentials, ISISGEANestSSOConfigOIDCClientCredentials } from '@sisgea/sso-nest-client';
+import {
+  ISisgeaNestAuthConnectConfigKeycloakCredentials,
+  ISisgeaNestAuthConnectConfigOidcClientCredentials,
+} from '@sisgea/nest-auth-connect';
 import { IConfig, IConfigMeiliSearchCredentials } from '../../domain';
 
 @Injectable()
 export class EnvironmentConfigService implements IConfig {
   constructor(
     // ...
-    private configService: ConfigService,
+    private nestConfigService: ConfigService,
   ) {}
 
   getMeiliSearchHost(): string | null {
-    const host = this.configService.get<string>('MEILISEARCH_HOST') ?? null;
+    const host = this.nestConfigService.get<string>('MEILISEARCH_HOST') ?? null;
     return host;
   }
 
   getMeiliSearchApiKey(): string | null {
-    const apiKey = this.configService.get<string>('MEILISEARCH_API_KEY') ?? null;
+    const apiKey = this.nestConfigService.get<string>('MEILISEARCH_API_KEY') ?? null;
     return apiKey;
   }
 
@@ -35,12 +38,12 @@ export class EnvironmentConfigService implements IConfig {
   }
 
   getSISGEAAutorizacaoGRPCServer(): string | null {
-    const url = this.configService.get<string | string>('SISGEA_AUTORIZACAO_GRPC_SERVER') ?? null;
+    const url = this.nestConfigService.get<string | string>('SISGEA_AUTORIZACAO_GRPC_SERVER') ?? null;
     return url;
   }
 
   getRuntimePort(): number {
-    const configPort = this.configService.get<number | string>('PORT') ?? null;
+    const configPort = this.nestConfigService.get<number | string>('PORT') ?? null;
 
     if (configPort !== null) {
       const configPortAsNumber = parseInt(String(configPort));
@@ -54,7 +57,7 @@ export class EnvironmentConfigService implements IConfig {
   }
 
   getRuntimeNodeEnv(): string {
-    const runtimeNodeEnv = (this.configService.get<string>('NODE_ENV') ?? 'production').trim().toLocaleLowerCase();
+    const runtimeNodeEnv = (this.nestConfigService.get<string>('NODE_ENV') ?? 'production').trim().toLocaleLowerCase();
 
     return runtimeNodeEnv;
   }
@@ -69,22 +72,10 @@ export class EnvironmentConfigService implements IConfig {
 
   //
 
-  getOIDCClientClientId(): string | undefined {
-    return this.configService.get<string>('OAUTH2_CLIENT_REGISTRATION_LOGIN_CLIENT_ID');
-  }
-
-  getOIDCClientClientSecret(): string | undefined {
-    return this.configService.get<string>('OAUTH2_CLIENT_REGISTRATION_LOGIN_CLIENT_SECRET');
-  }
-
-  getOIDCClientIssuer(): string | undefined {
-    return this.configService.get<string>('OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER');
-  }
-
-  getOIDCClientCredentials(): ISISGEANestSSOConfigOIDCClientCredentials {
-    const issuer = this.getOIDCClientIssuer();
-    const clientId = this.getOIDCClientClientId();
-    const clientSecret = this.getOIDCClientClientSecret();
+  getOidcClientCredentials(): ISisgeaNestAuthConnectConfigOidcClientCredentials {
+    const issuer = this.nestConfigService.get<string>('OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER');
+    const clientId = this.nestConfigService.get<string>('OAUTH2_CLIENT_REGISTRATION_LOGIN_CLIENT_ID');
+    const clientSecret = this.nestConfigService.get<string>('OAUTH2_CLIENT_REGISTRATION_LOGIN_CLIENT_SECRET');
 
     if (issuer === undefined || clientId === undefined || clientSecret === undefined) {
       throw new Error('Please provide correct OAUTH2_CLIENT credentials.');
@@ -99,14 +90,14 @@ export class EnvironmentConfigService implements IConfig {
 
   //
 
-  getKeyCloakConfigCredentials(): ISISGEANestSSOConfigKeyCloakCredentials {
+  getKeycloakConfigCredentials(): ISisgeaNestAuthConnectConfigKeycloakCredentials {
     throw new Error('getKeyCloakConfigCredentials: not implemented');
   }
 
   //
 
   getMessageBrokerConnectionURL(): string | undefined {
-    return this.configService.get<string>('MESSAGE_BROKER_CONNECTION_URL');
+    return this.nestConfigService.get<string>('MESSAGE_BROKER_CONNECTION_URL');
   }
 
   //

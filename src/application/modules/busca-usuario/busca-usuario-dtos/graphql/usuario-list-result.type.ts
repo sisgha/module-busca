@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { GenericSearchResultType } from '../../../_generics/graphql/generic-search-result.type';
+import { GenericSearchResultType } from '../../../busca/graphql/GenericSearchResultType';
 import { UsuarioType } from './usuario.type';
 
 @ObjectType('UsuarioListResult')

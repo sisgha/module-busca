@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import { MeiliSearch } from 'meilisearch';
 import { IModuleBuscaAppResource } from '../../../domain';
-import { BuscaAppResources } from '../../../application/modules';
+import { BuscaAppResources } from '../../../application/modules/busca-app-resources';
 
 export class MeilisearchSetupUtil {
   static async ensureIndexExists(client: MeiliSearch, index: string): Promise<void> {

@@ -1,7 +1,7 @@
-import { ForeignDbEventModel } from '../../../domain';
-import { DbEventZod } from '../index';
+import { SisgeaDbEventModel } from '@sisgea/spec';
 import { tryJSONParse } from '../../helpers/utils/try-json-parse.util';
 import { HandleDbEventOutputReason } from '../domain/HandleDbEventOutputReason';
+import { DbEventZod } from '../index';
 
 export const parseDbEvent = async (dbEventRaw: unknown) => {
   const dbEvent = typeof dbEventRaw === 'string' ? tryJSONParse(dbEventRaw) : dbEventRaw;
@@ -9,7 +9,7 @@ export const parseDbEvent = async (dbEventRaw: unknown) => {
   const dbEventValidationResult = await DbEventZod.safeParseAsync(dbEvent);
 
   if (dbEventValidationResult.success) {
-    const dbEvent = dbEventValidationResult.data as ForeignDbEventModel;
+    const dbEvent = dbEventValidationResult.data as SisgeaDbEventModel;
 
     return {
       success: true,

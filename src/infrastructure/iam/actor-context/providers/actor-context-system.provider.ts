@@ -1,5 +1,5 @@
 import { Provider } from '@nestjs/common';
-import { SISGEAAutorizacaoConnectContainerService } from '../../../sisgea-autorizacao-connect-container/sisgea-autorizacao-connect-container.service';
+import { SisgeaAutorizacaoConnectContainerService } from '../../../sisgea-autorizacao-connect-container/sisgea-autorizacao-connect-container.service';
 import { ActorContext } from '../actor-context';
 
 export const ACTOR_CONTEXT_SYSTEM = Symbol();
@@ -9,7 +9,7 @@ export const actorContextSystemProvider: Provider = {
 
   useFactory: async (
     //
-    sisgeaAutorizacaoClientService: SISGEAAutorizacaoConnectContainerService,
+    sisgeaAutorizacaoClientService: SisgeaAutorizacaoConnectContainerService,
   ) => {
     return ActorContext.forSystem(sisgeaAutorizacaoClientService);
   },
@@ -17,6 +17,6 @@ export const actorContextSystemProvider: Provider = {
   inject: [
     //
 
-    SISGEAAutorizacaoConnectContainerService,
+    SisgeaAutorizacaoConnectContainerService,
   ],
 };

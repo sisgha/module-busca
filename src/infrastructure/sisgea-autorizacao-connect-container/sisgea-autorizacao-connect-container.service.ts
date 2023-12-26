@@ -2,13 +2,13 @@ import { Injectable, InternalServerErrorException, ServiceUnavailableException }
 import { AllowedResourceResponse, GenericCanRequest, SISGEAAutorizacaoConnect, UsuarioCanRequest } from '@sisgea/autorizacao-client';
 import { Channel, createChannel, waitForChannelReady } from 'nice-grpc';
 import { IActor, IAuthenticatedEntityType } from '../../domain';
-import { ActorUser } from '../iam/authentication';
 import { EnvironmentConfigService } from '../environment-config';
+import { ActorUser } from '../iam/authentication';
 
 const onPromiseError = () => Promise.reject(new ServiceUnavailableException());
 
 @Injectable()
-export class SISGEAAutorizacaoConnectContainerService {
+export class SisgeaAutorizacaoConnectContainerService {
   #channel: Channel | null = null;
 
   constructor(private configService: EnvironmentConfigService) {}

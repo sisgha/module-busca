@@ -1,5 +1,5 @@
-import {IUsuarioFindByIdInput} from "./IUsuarioFindByIdInput";
+import { IUsuarioFindByIdInput } from './IUsuarioFindByIdInput';
 
 export type IUsuarioDeleteInput = {
-  id: IUsuarioFindByIdInput["id"];
+  id: IUsuarioFindByIdInput['id'];
 };

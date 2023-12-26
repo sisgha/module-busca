@@ -6,18 +6,20 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { SISGEANestSSOAuthenticationModule } from '@sisgea/sso-nest-client';
-import { AuthenticatedGraphQLGuard } from '@sisgea/sso-nest-client/dist/application/gql';
+import { SisgeaNestAuthConnectModule } from '@sisgea/nest-auth-connect';
+import { AuthenticatedGqlGuard } from '@sisgea/nest-auth-connect/dist/modules/sisgea-nest-auth-protect/gql';
+import { GqlExceptionFilter } from '../infrastructure/api-app/filters/GqlExceptionFilter';
 import { EnvironmentConfigModule } from '../infrastructure/environment-config';
 import { ActorContextModule } from '../infrastructure/iam/actor-context';
 import { MeilisearchContainerModule } from '../infrastructure/meilisearch-container/meilisearch-container.module';
 import { MessageBrokerContainerModule } from '../infrastructure/message-broker-container/message-broker-container.module';
 import { MessageBrokerSubscriptionsModule } from '../infrastructure/message-broker-subscriptions/message-broker-subscriptions.module';
-import { SISGEAAutorizacaoConnectContainerModule } from '../infrastructure/sisgea-autorizacao-connect-container/sisgea-autorizacao-connect-container.module';
-import { SISGEANestSSOContextModule } from '../infrastructure/sisgea-nest-sso-context';
+import { SisgeaAutorizacaoConnectContainerModule } from '../infrastructure/sisgea-autorizacao-connect-container/sisgea-autorizacao-connect-container.module';
+import { SisgeaNestAuthConnectConfigModule } from '../infrastructure/sisgea-nest-auth-connect-config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GqlExceptionFilter } from './filters/GqlExceptionFilter';
+import { BuscaCursoModule } from './modules/busca-curso/busca-curso.module';
+import { BuscaModalidadeModule } from './modules/busca-modalidade/busca-modalidade.module';
 import { BuscaUsuarioModule } from './modules/busca-usuario/busca-usuario.module';
 
 @Module({
@@ -57,9 +59,12 @@ import { BuscaUsuarioModule } from './modules/busca-usuario/busca-usuario.module
 
     //
 
-    SISGEANestSSOContextModule,
-    SISGEANestSSOAuthenticationModule,
-    SISGEAAutorizacaoConnectContainerModule,
+    SisgeaNestAuthConnectConfigModule,
+    SisgeaNestAuthConnectModule,
+
+    //
+
+    SisgeaAutorizacaoConnectContainerModule,
 
     //
 
@@ -80,17 +85,22 @@ import { BuscaUsuarioModule } from './modules/busca-usuario/busca-usuario.module
     //
 
     BuscaUsuarioModule,
+
+    BuscaModalidadeModule,
+    BuscaCursoModule,
   ],
 
   controllers: [
     //
     AppController,
   ],
+
   providers: [
     //
+
     {
       provide: APP_GUARD,
-      useClass: AuthenticatedGraphQLGuard,
+      useClass: AuthenticatedGqlGuard,
     },
 
     {

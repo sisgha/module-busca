@@ -1,13 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
+import { ISisgeaBuscaGenericListInput, ISisgeaBuscaGenericSearchResult } from '@sisgea/spec';
 import { has } from 'lodash';
 import MeiliSearch from 'meilisearch';
-import { BuscaAppResources, getAppResourceByKey } from '../../application/modules';
+import { BuscaAppResources, getAppResourceByKey } from '../../application/modules/busca-app-resources';
 import { IModuleBuscaAppResource } from '../../domain';
-import { IGenericListInput } from '../../domain/sisgea-search/IGenericListInput';
 import { parralelMap } from '../helpers/modules.parralel-map';
 import { MEILISEARCH_CLIENT } from './tokens/MEILISEARCH_CLIENT';
-import { IGenericSearchResult } from '../../domain/sisgea-search/IGenericSearchResult';
 
 export const MEILISEARCH_SYNC_RECORDS_INTERVAL = 5 * 1000;
 
@@ -30,9 +29,9 @@ export class MeilisearchContainerService {
 
   async listResource<T extends { id: K }, K = unknown>(
     indexUid: string,
-    dto: IGenericListInput,
+    dto: ISisgeaBuscaGenericListInput,
     targetIds: K[] | null = null,
-  ): Promise<IGenericSearchResult<T>> {
+  ): Promise<ISisgeaBuscaGenericSearchResult<T>> {
     const { query, limit, offset, sort } = dto;
 
     const filter: string[] = [

@@ -1,10 +1,11 @@
-import { IModuleBuscaAppResource, IAppResourceKey, IModuleBuscaAppResourcePresenter } from '../../../domain';
+import { SisgeaResource } from '@sisgea/spec';
+import { IModuleBuscaAppResource, IModuleBuscaAppResourcePresenter } from '../../../domain';
 
 export const BuscaUsuarioAppResource: IModuleBuscaAppResource = {
-  key: IAppResourceKey.USUARIO,
+  key: SisgeaResource.USUARIO,
 
   search: {
-    index: IAppResourceKey.USUARIO,
+    index: SisgeaResource.USUARIO,
     searchable: [
       'id',
       // ...

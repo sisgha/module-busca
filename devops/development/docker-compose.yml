@@ -25,8 +25,8 @@ services:
       - 'sisgea-module-busca-meilisearch-data:/meili_data'
     networks:
       - sisgea-net
-    ports:
-      - 127.128.69.65:7700:7700
+    # ports:
+    # - 127.128.69.63:7700:7700
     env_file:
       - .meilisearch.env
 

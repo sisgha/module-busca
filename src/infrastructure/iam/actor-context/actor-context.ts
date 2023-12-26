@@ -1,10 +1,10 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { GenericCanRequest } from '@sisgea/autorizacao-client';
-import { IRequestUser } from '@sisgea/sso-nest-client';
+import { IRequestUser } from '@sisgea/nest-auth-connect';
 import { get } from 'lodash';
 import { IGenericAction } from '../../IGenericAction';
+import { SisgeaAutorizacaoConnectContainerService } from '../../sisgea-autorizacao-connect-container/sisgea-autorizacao-connect-container.service';
 import { Actor, ActorUser } from '../authentication';
-import { SISGEAAutorizacaoConnectContainerService } from '../../sisgea-autorizacao-connect-container/sisgea-autorizacao-connect-container.service';
 
 @Injectable()
 export class ActorContext {
@@ -13,7 +13,7 @@ export class ActorContext {
   constructor(
     // ...
 
-    public readonly sisgeaAutorizacaoClientService: SISGEAAutorizacaoConnectContainerService,
+    public readonly sisgeaAutorizacaoClientService: SisgeaAutorizacaoConnectContainerService,
 
     actor?: Actor,
   ) {
@@ -28,15 +28,15 @@ export class ActorContext {
 
   // ...
 
-  static forSystem(sisgeaAutorizacaoClientService: SISGEAAutorizacaoConnectContainerService) {
+  static forSystem(sisgeaAutorizacaoClientService: SisgeaAutorizacaoConnectContainerService) {
     return new ActorContext(sisgeaAutorizacaoClientService, Actor.forInternalSystem());
   }
 
-  static forUser(sisgeaAutorizacaoClientService: SISGEAAutorizacaoConnectContainerService, userId: string) {
+  static forUser(sisgeaAutorizacaoClientService: SisgeaAutorizacaoConnectContainerService, userId: string) {
     return new ActorContext(sisgeaAutorizacaoClientService, ActorUser.forUser(userId));
   }
 
-  static forRequestUser(sisgeaAutorizacaoClientService: SISGEAAutorizacaoConnectContainerService, requestUser: IRequestUser | null) {
+  static forRequestUser(sisgeaAutorizacaoClientService: SisgeaAutorizacaoConnectContainerService, requestUser: IRequestUser | null) {
     const actor = ActorUser.forRequestUser(requestUser);
     return new ActorContext(sisgeaAutorizacaoClientService, actor);
   }
